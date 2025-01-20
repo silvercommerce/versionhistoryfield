@@ -11,3 +11,7 @@
 ## 1.0.2
 
 * fixed bug when letest version is unpublished
+
+## 1.1.0
+
+* Add SS5 support
