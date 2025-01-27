@@ -76,12 +76,10 @@ class VersionHistoryField extends FormField
                     }
                 }
 
-                $return->add(ArrayData::create(
-                    [
-                        "Version" => $version,
-                        "Diff" => $diff
-                    ]
-                ));
+                $return->add(ArrayData::create([
+                    "Version" => $version,
+                    "Diff" => $diff
+                ]));
             }
         }
 

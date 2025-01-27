@@ -15,3 +15,7 @@
 ## 1.1.0
 
 * Add SS5 support
+
+## 1.1.1
+
+* Clean up depreciation error
