@@ -2,8 +2,8 @@
 
 namespace SilverCommerce\VersionHistoryField\Forms;
 
+use LogicException;
 use SilverStripe\ORM\ArrayList;
-use SilverStripe\Core\ClassInfo;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\View\ArrayData;
 use SilverStripe\Forms\FormField;
@@ -19,23 +19,11 @@ class VersionHistoryField extends FormField
      */
     protected $record;
 
-    /**
-     * Get record
-     *
-     * @return  DataObject
-     */ 
-    public function getRecord()
+    public function getRecord(): DataObject
     {
         return $this->record;
     }
 
-    /**
-     * Set record
-     *
-     * @param  DataObject  $record  The dataobject that we want to se the version of
-     *
-     * @return  self
-     */ 
     public function setRecord(DataObject $record)
     {
         $this->record = $record;
@@ -44,29 +32,28 @@ class VersionHistoryField extends FormField
     }
 
     /**
-     * Construct this field
-     * 
      * @return void
      */
-    public function __construct($name, $title = null, DataObject $record)
+    public function __construct($name, $title = null, DataObject $record = null)
     {
-        $this->setRecord($record);
+        if (!empty($record)) {
+            $this->setRecord($record);
+        }
 
         parent::__construct($name, $title);
     }
 
-    /**
-     * Get a list of versions of the current record.
-     *
-     * @return ArrayList
-     */
-    public function getVersions()
+    public function getVersions(): ArrayList
     {
         $record = $this->getRecord();
         $return = ArrayList::create();
 
+        if (empty($record)) {
+            throw new LogicException('No DataObject available');
+        }
+
         if ($record->hasExtension(Versioned::class)) {
-            $versions = $record->AllVersions();
+            $versions = $record->Versions();
 
             foreach ($versions as $version) {
                 $i = $version->Version;
